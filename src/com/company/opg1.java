@@ -1,15 +1,12 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
 public class opg1 {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Random randomGenerator = new Random();
         int randomNumber = randomGenerator.nextInt(5) + 1;
         Scanner sc = new Scanner(System.in);
@@ -23,14 +20,22 @@ public class opg1 {
                 counter++;
             }else {
                 System.out.println("korrekt");
-                System.out.println("du gættede " + counter + " gange");
+                String tekst = "du gættede " + counter + " gang";
+                File file = new File("data/output.txt");PrintStream ps = new PrintStream(new FileOutputStream(file,true));
+                if (file.createNewFile()){
+                    System.out.println("Fil oprettet i datamapenne: " + file.getName());
+                }else {
+                    System.out.println("fillen er oprettet");
+                }
+                FileWriter myWriter = new FileWriter("data/output.txt");
+                myWriter.write(tekst);
+                myWriter.close();
+
+                }
                 gentag = false;
             }
 
 
         }
-        File file = new File("data/output.txt");
-        PrintStream ps = new PrintStream(new FileOutputStream(file,true));
-        ps.println(counter);
     }
-}
+
